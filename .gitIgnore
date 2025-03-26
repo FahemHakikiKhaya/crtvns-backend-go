@@ -1,0 +1,34 @@
+# Binaries
+*.exe
+*.out
+*.o
+*.a
+*.so
+*.dll
+
+# Go-specific
+bin/
+pkg/
+vendor/
+*.test
+*.prof
+
+# Dependencies
+go.sum
+go.work.sum
+
+# Build and IDE files
+.DS_Store
+*.log
+*.swp
+*.swo
+.idea/
+.vscode/
+*.iml
+
+# Go Modules cache (optional)
+**/vendor/
+
+# Temporary files
+*.tmp
+*.bak
