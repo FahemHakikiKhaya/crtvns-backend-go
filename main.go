@@ -4,18 +4,33 @@ import (
 	"fmt"
 	"net/http"
 
+	"github.com/FahemHakikiKhaya/crtvns-backend-go/config"
+	"github.com/FahemHakikiKhaya/crtvns-backend-go/controller"
 	"github.com/FahemHakikiKhaya/crtvns-backend-go/helper"
-	"github.com/julienschmidt/httprouter"
+	"github.com/FahemHakikiKhaya/crtvns-backend-go/repository"
+	"github.com/FahemHakikiKhaya/crtvns-backend-go/router"
+	"github.com/FahemHakikiKhaya/crtvns-backend-go/service"
 )
 
 func main() {
 	fmt.Println("Start server")
 
-	routes := httprouter.New()
+	// database
+	db := config.DatabaseConnection()
 
-	routes.GET("/", func(w http.ResponseWriter, r *http.Request, p httprouter.Params) { 
-		fmt.Fprint(w, "Welcome Home")
-	})
+	// repository
+	userRepository := repository.NewUserRepository(db)
+	userHistoryRepository := repository.NewUserHistoryRepository(db)
+
+	// service
+	authService := service.NewAuthServiceImpl(userRepository)
+	userHistoryService := service.NewUserHistoryService(userHistoryRepository)
+
+	// controller
+	authController := controller.NewAuthController(authService)
+	userHistoryController := controller.NewUserHistoryController(userHistoryService)
+
+	routes := router.NewRouter(authController, userHistoryController)
 
 	server := http.Server{Addr: "localhost: 8888", Handler: routes}
 

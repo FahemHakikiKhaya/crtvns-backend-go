@@ -4,6 +4,8 @@ import (
 	"database/sql"
 	"fmt"
 
+	_ "github.com/lib/pq"
+
 	"github.com/FahemHakikiKhaya/crtvns-backend-go/helper"
 	"github.com/rs/zerolog/log"
 )
@@ -12,8 +14,8 @@ const (
 	host   = "localhost"
 	port   = 5432
 	user   = "postgres"
-	password = "halo123;"
-	dbName = "test"
+	password = "Halo123;"
+	dbName = "travelio"
 )
 
 func DatabaseConnection() *sql.DB {
